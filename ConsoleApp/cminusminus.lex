@@ -4,7 +4,7 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdio.h>
-#include "symbols.h"
+#include "c.tab.h"
 
 void warning();
 void count();
@@ -28,7 +28,7 @@ void count();
 0{D}+{IS}?			{ count(); return(CONSTANT); }
 {D}+{IS}?				{ count(); return(CONSTANT); }
 
-L?\"(\\.|[^\\"])*\"	{ count(); return(STRING_LITERAL); }
+{L}?\"(\\.|[^\\"])*\"	{ count(); return(STRING_LITERAL); }
 
 
 "{"			{ count(); return(LBRACE); }

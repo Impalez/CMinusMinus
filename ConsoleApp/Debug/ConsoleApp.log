@@ -1,8 +1,10 @@
 ﻿  ConsoleApp.c
+  c.tab.c
   lex.yy.c
 cminusminus.lex(14,10): warning C4013: 'comment' undefined; assuming extern returning int
 cminusminus.lex(27,29): warning C4013: 'check_type' undefined; assuming extern returning int
-lex.yy.c(1580,46): warning C4013: 'isatty' undefined; assuming extern returning int
+lex.yy.c(1588,46): warning C4013: 'isatty' undefined; assuming extern returning int
   Generating Code...
 D:\Documentsz\Facultate\Anul IV\Translator Design\CMinusMinus\ConsoleApp\cminusminus.lex(92): warning C4716: 'comment': must return a value
-  ConsoleApp.vcxproj -> D:\Documentsz\Facultate\Anul IV\Translator Design\CMinusMinus\Debug\ConsoleApp.exe
+c.tab.obj : error LNK2019: unresolved external symbol _yyerror referenced in function _yyparse
+D:\Documentsz\Facultate\Anul IV\Translator Design\CMinusMinus\Debug\ConsoleApp.exe : fatal error LNK1120: 1 unresolved externals

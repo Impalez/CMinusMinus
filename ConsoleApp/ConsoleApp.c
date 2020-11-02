@@ -1,7 +1,5 @@
-
-
 #include <stdio.h>
-#include "symbols.h"
+#include "c.tab.h"
 #include <errno.h>
 
 extern FILE* yyin;
@@ -52,20 +50,35 @@ const char* lexUnits[] = { "END",
 
 int main()
 {
-    int tokenValue = 0;
+    yydebug = 1;
     yyin = fopen("input.csrc", "rt");
 
     if (yyin != NULL)
     {
-        while ((tokenValue = yylex()) != END)
+        int result = yyparse();
+        switch (result)
         {
-            printf(" -> TOKEN ID: %d; TOKEN VALUE: %s \n", tokenValue, lexUnits[tokenValue]);
+        case 0:
+            printf("Parse succesfully. \n");
+            break;
+        
+        case 1:
+            printf("Invalid input encountered. \n");
+            break;
+
+        case 2:
+            printf("Out of memory. \n");
+            break;
+
+        default:
+            break;
         }
-        printf("\n\n Hello World!\n");
+        fclose(yyin);
     }
     else
     {
-        printf("Fisierul de intrare nu poate fi deschis. Eroare: %d", errno);
+        printf("Inexistent file. \n");
     }
+
 }
 
