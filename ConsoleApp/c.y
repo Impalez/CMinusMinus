@@ -1,7 +1,7 @@
 %{
   #include <stdio.h>
 
-  int yyerror(char *s);
+  int yyerror(char * s);
   extern int yylex(void);
 %}
 
@@ -57,8 +57,8 @@ program
  ;
 
 varDecl
- : type id ';'
- | type id '[' INTEGER_LITERAL ']' ';'
+ : type id END_OF_INSTRUCTION
+ | type id LBRACK INTEGER_LITERAL RBRACK END_OF_INSTRUCTION
  ;
 
 type
@@ -72,13 +72,13 @@ fnDecl
  ;
 
 parameters
- : '(' ')'
- | '(' formalsList ')'
+ : LPAREN RPAREN
+ | LPAREN formalsList RPAREN
  ;
 
 formalsList
  : formalDecl
- | formalsList ',' formalDecl
+ | formalsList COMMA formalDecl
  ;
 
 formalDecl
@@ -86,7 +86,7 @@ formalDecl
  ;
 
 block
- : '{' declList stmtList '}'
+ : LBRACE declList stmtList RBRACE
  ;
 
 declList
@@ -100,17 +100,17 @@ stmtList
  ;
 
 stmt
- : CIN id ';'
- | CIN id '[' exp ']' ';'
- | COUT exp ';'
- | subscriptExpr '=' exp ';'
- | id '=' exp ';'
- | IF '(' exp ')' block
- | IF '(' exp ')' block ELSE block
- | WHILE '(' exp ')' block
- | RETURN exp ';'
- | RETURN ';'
- | fnCallStmt ';'
+ : CIN id END_OF_INSTRUCTION
+ | CIN id LBRACK exp RBRACK END_OF_INSTRUCTION
+ | COUT exp END_OF_INSTRUCTION
+ | subscriptExpr ASSIGN exp END_OF_INSTRUCTION
+ | id ASSIGN exp END_OF_INSTRUCTION
+ | IF LPAREN exp RPAREN block
+ | IF LPAREN exp RPAREN block ELSE block
+ | WHILE LPAREN exp RPAREN block
+ | RETURN exp END_OF_INSTRUCTION
+ | RETURN END_OF_INSTRUCTION
+ | fnCallStmt END_OF_INSTRUCTION
  ;
 
 exp
@@ -129,7 +129,7 @@ exp
  | exp GTE exp
  | exp RIGHT exp
  | exp LEFT exp
- | '-' atom
+ | SUBSTRACT atom
  | atom
  ;
 
@@ -138,29 +138,29 @@ atom
  | STRING_LITERAL
  | TRUE
  | FALSE
- | '(' exp ')'
+ | LPAREN exp RPAREN
  | fnCallExpr
  | subscriptExpr
  | id
  ;
 
 fnCallExpr
- : id '(' ')'
- | id '(' actualList ')'
+ : id LPAREN RPAREN
+ | id LPAREN actualList RPAREN
  ;
 
 fnCallStmt
- : id '(' ')'
- | id '(' actualList ')'
+ : id LPAREN RPAREN
+ | id LPAREN actualList RPAREN
  ;
 
 actualList
  : exp
- | actualList ',' exp
+ | actualList COMMA exp
  ;
 
 subscriptExpr
- : id '[' exp ']'
+ : id LBRACK exp RBRACK
  ;
  
 id
@@ -170,12 +170,11 @@ id
 
 %%
 
-void yerror(char * s)
-/* yacc error handler */
-{
-  printf("%s\n", s);
-}
-
+int yyerror(char * s) 
+{    
+	printf ( "%s\n", s); 
+	return 0;
+}  
 
 
 
