@@ -3,7 +3,9 @@
 #include <errno.h>
 
 extern FILE* yyin;
-extern int yylex(void);
+//extern int yylex(void);
+extern int yyparse(void);
+extern int yydebug;
 
 const char* lexUnits[] = { "END",
                            "INT",
